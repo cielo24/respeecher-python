@@ -1,8 +1,6 @@
 # Voice
 
-
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
@@ -26,27 +24,9 @@ Name | Type | Description | Notes
 **created_at** | **datetime** |  | [optional] 
 **favorite** | **bool** |  | [optional] 
 **available** | **bool** |  | [optional] 
-**accents** | [**List[Accent]**](Accent.md) |  | [optional] 
-**narration_styles** | **List[object]** |  | [optional] 
-**tiers** | [**List[Tier]**](Tier.md) |  | [optional] 
+**accents** | [**list[Accent]**](Accent.md) |  | [optional] 
+**narration_styles** | **list[object]** |  | [optional] 
+**tiers** | [**list[Tier]**](Tier.md) |  | [optional] 
 
-## Example
-
-```python
-from respeecher.models.voice import Voice
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Voice from a JSON string
-voice_instance = Voice.from_json(json)
-# print the JSON string representation of the object
-print(Voice.to_json())
-
-# convert the object into a dict
-voice_dict = voice_instance.to_dict()
-# create an instance of Voice from a dict
-voice_form_dict = voice.from_dict(voice_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 

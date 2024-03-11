@@ -17,7 +17,6 @@ Method | HTTP request | Description
 [**delete_note**](DefaultApi.md#delete_note) | **DELETE** /api/notes | Delete a note
 [**delete_project**](DefaultApi.md#delete_project) | **DELETE** /api/projects/{project_id} | Delete a project
 [**delete_recording**](DefaultApi.md#delete_recording) | **DELETE** /api/recordings/{recording_id} | Delete a recording
-[**download_file**](DefaultApi.md#download_file) | **GET** /storage/{file_to_download} | Download file
 [**enable_calibration**](DefaultApi.md#enable_calibration) | **PUT** /api/calibration/{calibration_id}/enable | Set a calibration as the default enabled calibration
 [**export_project**](DefaultApi.md#export_project) | **GET** /api/projects/{project_id}/export | Export a project
 [**favorite_voice**](DefaultApi.md#favorite_voice) | **POST** /api/v2/voices/favorite/{voice_id} | Mark a voice as a favorite
@@ -49,73 +48,51 @@ Method | HTTP request | Description
 [**update_project**](DefaultApi.md#update_project) | **PATCH** /api/projects/{project_id} | Change the name of a project
 [**update_recording**](DefaultApi.md#update_recording) | **PATCH** /api/recordings/{recording_id} | Update a recording
 
-
 # **create_calibration**
-> CalibrationResponse create_calibration(name=name, data=data)
+> CalibrationResponse create_calibration(name, data)
 
 Create a new Calibration
 
 Currently the supported audio formats are wav, ogg, mp3 or flac.
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.calibration_response import CalibrationResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    name = 'name_example' # str | Unique name for the calibration. (optional)
-    data = None # bytearray | The audio binary data. (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+name = 'name_example' # str | 
+data = 'data_example' # str | 
 
-    try:
-        # Create a new Calibration
-        api_response = api_instance.create_calibration(name=name, data=data)
-        print("The response of DefaultApi->create_calibration:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_calibration: %s\n" % e)
+try:
+    # Create a new Calibration
+    api_response = api_instance.create_calibration(name, data)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_calibration: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Unique name for the calibration. | [optional] 
- **data** | **bytearray**| The audio binary data. | [optional] 
+ **name** | **str**|  | 
+ **data** | **str**|  | 
 
 ### Return type
 
@@ -123,84 +100,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Calibration created successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_folder**
-> Folder create_folder(folder_request)
+> Folder create_folder(body)
 
 Create a folder
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.folder import Folder
-from respeecher.models.folder_request import FolderRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    folder_request = respeecher.FolderRequest() # FolderRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.FolderRequest() # FolderRequest | 
 
-    try:
-        # Create a folder
-        api_response = api_instance.create_folder(folder_request)
-        print("The response of DefaultApi->create_folder:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_folder: %s\n" % e)
+try:
+    # Create a folder
+    api_response = api_instance.create_folder(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_folder: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **folder_request** | [**FolderRequest**](FolderRequest.md)|  | 
+ **body** | [**FolderRequest**](FolderRequest.md)|  | 
 
 ### Return type
 
@@ -208,84 +157,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folder created successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_note**
-> NoteResponse create_note(note_request)
+> NoteResponse create_note(body)
 
 Create a note associated with a recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.note_request import NoteRequest
-from respeecher.models.note_response import NoteResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    note_request = respeecher.NoteRequest() # NoteRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.NoteRequest() # NoteRequest | 
 
-    try:
-        # Create a note associated with a recording
-        api_response = api_instance.create_note(note_request)
-        print("The response of DefaultApi->create_note:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_note: %s\n" % e)
+try:
+    # Create a note associated with a recording
+    api_response = api_instance.create_note(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_note: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **note_request** | [**NoteRequest**](NoteRequest.md)|  | 
+ **body** | [**NoteRequest**](NoteRequest.md)|  | 
 
 ### Return type
 
@@ -293,174 +214,119 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Note created successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_order**
-> List[Order] create_order(order_request)
+> list[Order] create_order(body)
 
 Create a conversion order
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.order import Order
-from respeecher.models.order_request import OrderRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    order_request = respeecher.OrderRequest() # OrderRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.OrderRequest() # OrderRequest | 
 
-    try:
-        # Create a conversion order
-        api_response = api_instance.create_order(order_request)
-        print("The response of DefaultApi->create_order:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_order: %s\n" % e)
+try:
+    # Create a conversion order
+    api_response = api_instance.create_order(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_order: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_request** | [**OrderRequest**](OrderRequest.md)|  | 
+ **body** | [**OrderRequest**](OrderRequest.md)|  | 
 
 ### Return type
 
-[**List[Order]**](Order.md)
+[**list[Order]**](Order.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Order created successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_original_recording**
-> Recording create_original_recording(data=data, parent_folder_id=parent_folder_id, microphone=microphone, label=label)
+> Recording create_original_recording(data, parent_folder_id, microphone, label)
 
 Create an original recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording import Recording
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    data = None # bytearray | The audio binary data (optional)
-    parent_folder_id = 'parent_folder_id_example' # str |  (optional)
-    microphone = 'microphone_example' # str | Name of the microphone used, set to 'file' if uploading a file (optional)
-    label = 'label_example' # str |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+data = 'data_example' # str | 
+parent_folder_id = 'parent_folder_id_example' # str | 
+microphone = 'microphone_example' # str | 
+label = 'label_example' # str | 
 
-    try:
-        # Create an original recording
-        api_response = api_instance.create_original_recording(data=data, parent_folder_id=parent_folder_id, microphone=microphone, label=label)
-        print("The response of DefaultApi->create_original_recording:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_original_recording: %s\n" % e)
+try:
+    # Create an original recording
+    api_response = api_instance.create_original_recording(data, parent_folder_id, microphone, label)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_original_recording: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **data** | **bytearray**| The audio binary data | [optional] 
- **parent_folder_id** | **str**|  | [optional] 
- **microphone** | **str**| Name of the microphone used, set to &#39;file&#39; if uploading a file | [optional] 
- **label** | **str**|  | [optional] 
+ **data** | **str**|  | 
+ **parent_folder_id** | **str**|  | 
+ **microphone** | **str**|  | 
+ **label** | **str**|  | 
 
 ### Return type
 
@@ -468,84 +334,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Original recording created successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_project**
-> ProjectResponse create_project(project_request)
+> ProjectResponse create_project(body)
 
 Create a new project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.project_request import ProjectRequest
-from respeecher.models.project_response import ProjectResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_request = respeecher.ProjectRequest() # ProjectRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.ProjectRequest() # ProjectRequest | 
 
-    try:
-        # Create a new project
-        api_response = api_instance.create_project(project_request)
-        print("The response of DefaultApi->create_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_project: %s\n" % e)
+try:
+    # Create a new project
+    api_response = api_instance.create_project(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_project: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_request** | [**ProjectRequest**](ProjectRequest.md)|  | 
+ **body** | [**ProjectRequest**](ProjectRequest.md)|  | 
 
 ### Return type
 
@@ -553,84 +391,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Project created successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_tts_recording**
-> Recording create_tts_recording(tts_recording_request)
+> Recording create_tts_recording(body)
 
 Create an original text-to-speech recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording import Recording
-from respeecher.models.tts_recording_request import TTSRecordingRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    tts_recording_request = respeecher.TTSRecordingRequest() # TTSRecordingRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.TTSRecordingRequest() # TTSRecordingRequest | 
 
-    try:
-        # Create an original text-to-speech recording
-        api_response = api_instance.create_tts_recording(tts_recording_request)
-        print("The response of DefaultApi->create_tts_recording:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->create_tts_recording: %s\n" % e)
+try:
+    # Create an original text-to-speech recording
+    api_response = api_instance.create_tts_recording(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->create_tts_recording: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tts_recording_request** | [**TTSRecordingRequest**](TTSRecordingRequest.md)|  | 
+ **body** | [**TTSRecordingRequest**](TTSRecordingRequest.md)|  | 
 
 ### Return type
 
@@ -638,18 +448,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | TTS recording created successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -659,54 +463,35 @@ Name | Type | Description  | Notes
 Delete the API key associated with your account
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Delete the API key associated with your account
-        api_instance.delete_api_key()
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_api_key: %s\n" % e)
+try:
+    # Delete the API key associated with your account
+    api_instance.delete_api_key()
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_api_key: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -715,18 +500,12 @@ void (empty response body)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | API key deleted successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -736,58 +515,37 @@ void (empty response body)
 Delete a calibration
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.calibration_response import CalibrationResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    calibration_id = 'calibration_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+calibration_id = 'calibration_id_example' # str | 
 
-    try:
-        # Delete a calibration
-        api_response = api_instance.delete_calibration(calibration_id)
-        print("The response of DefaultApi->delete_calibration:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_calibration: %s\n" % e)
+try:
+    # Delete a calibration
+    api_response = api_instance.delete_calibration(calibration_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_calibration: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -799,79 +557,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | The deleted calibration |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_folder**
-> List[DeleteProject200Response] delete_folder(folder_id)
+> list[InlineResponse2004] delete_folder(folder_id)
 
 Delete a folder
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.delete_project200_response import DeleteProject200Response
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    folder_id = 'folder_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+folder_id = 'folder_id_example' # str | 
 
-    try:
-        # Delete a folder
-        api_response = api_instance.delete_folder(folder_id)
-        print("The response of DefaultApi->delete_folder:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_folder: %s\n" % e)
+try:
+    # Delete a folder
+    api_response = api_instance.delete_folder(folder_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_folder: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -879,88 +610,60 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[DeleteProject200Response]**](DeleteProject200Response.md)
+[**list[InlineResponse2004]**](InlineResponse2004.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folder deleted successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_note**
-> NoteResponse delete_note(note_delete_request)
+> NoteResponse delete_note(body)
 
 Delete a note
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.note_delete_request import NoteDeleteRequest
-from respeecher.models.note_response import NoteResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    note_delete_request = respeecher.NoteDeleteRequest() # NoteDeleteRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.NoteDeleteRequest() # NoteDeleteRequest | 
 
-    try:
-        # Delete a note
-        api_response = api_instance.delete_note(note_delete_request)
-        print("The response of DefaultApi->delete_note:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_note: %s\n" % e)
+try:
+    # Delete a note
+    api_response = api_instance.delete_note(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_note: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **note_delete_request** | [**NoteDeleteRequest**](NoteDeleteRequest.md)|  | 
+ **body** | [**NoteDeleteRequest**](NoteDeleteRequest.md)|  | 
 
 ### Return type
 
@@ -968,79 +671,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Note deleted successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project**
-> DeleteProject200Response delete_project(project_id)
+> InlineResponse2004 delete_project(project_id)
 
 Delete a project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.delete_project200_response import DeleteProject200Response
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_id = 'project_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_id = 'project_id_example' # str | 
 
-    try:
-        # Delete a project
-        api_response = api_instance.delete_project(project_id)
-        print("The response of DefaultApi->delete_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_project: %s\n" % e)
+try:
+    # Delete a project
+    api_response = api_instance.delete_project(project_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_project: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1048,22 +724,16 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DeleteProject200Response**](DeleteProject200Response.md)
+[**InlineResponse2004**](InlineResponse2004.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Project deleted successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1073,55 +743,36 @@ Name | Type | Description  | Notes
 Delete a recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    recording_id = 'recording_id_example' # str | The ID of the recording to delete
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+recording_id = 'recording_id_example' # str | The ID of the recording to delete
 
-    try:
-        # Delete a recording
-        api_instance.delete_recording(recording_id)
-    except Exception as e:
-        print("Exception when calling DefaultApi->delete_recording: %s\n" % e)
+try:
+    # Delete a recording
+    api_instance.delete_recording(recording_id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->delete_recording: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1133,165 +784,52 @@ void (empty response body)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Recording deleted successfully |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **download_file**
-> bytearray download_file(file_to_download)
-
-Download file
-
-Downloads the specified file in binary format.
-
-### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
-```python
-import respeecher
-from respeecher.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    file_to_download = 'file_to_download_example' # str | The name of the file to be downloaded, including its extension.
-
-    try:
-        # Download file
-        api_response = api_instance.download_file(file_to_download)
-        print("The response of DefaultApi->download_file:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->download_file: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **file_to_download** | **str**| The name of the file to be downloaded, including its extension. | 
-
-### Return type
-
-**bytearray**
-
-### Authorization
-
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/octet-stream
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | File downloaded successfully. |  -  |
-**404** | File not found. |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enable_calibration**
-> List[CalibrationResponse] enable_calibration(calibration_id)
+> list[CalibrationResponse] enable_calibration(calibration_id)
 
 Set a calibration as the default enabled calibration
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.calibration_response import CalibrationResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    calibration_id = 'calibration_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+calibration_id = 'calibration_id_example' # str | 
 
-    try:
-        # Set a calibration as the default enabled calibration
-        api_response = api_instance.enable_calibration(calibration_id)
-        print("The response of DefaultApi->enable_calibration:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->enable_calibration: %s\n" % e)
+try:
+    # Set a calibration as the default enabled calibration
+    api_response = api_instance.enable_calibration(calibration_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->enable_calibration: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1299,83 +837,57 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[CalibrationResponse]**](CalibrationResponse.md)
+[**list[CalibrationResponse]**](CalibrationResponse.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Calibration enabled successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **export_project**
-> bytearray export_project(project_id, starred_only=starred_only)
+> str export_project(project_id, starred_only=starred_only)
 
 Export a project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_id = 'project_id_example' # str | 
-    starred_only = True # bool |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_id = 'project_id_example' # str | 
+starred_only = true # bool |  (optional)
 
-    try:
-        # Export a project
-        api_response = api_instance.export_project(project_id, starred_only=starred_only)
-        print("The response of DefaultApi->export_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->export_project: %s\n" % e)
+try:
+    # Export a project
+    api_response = api_instance.export_project(project_id, starred_only=starred_only)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->export_project: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1384,90 +896,62 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**bytearray**
+**str**
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/zip
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Project exported successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **favorite_voice**
-> Voice favorite_voice(voice_id, favorite_voice_request)
+> Voice favorite_voice(body, voice_id)
 
 Mark a voice as a favorite
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.favorite_voice_request import FavoriteVoiceRequest
-from respeecher.models.voice import Voice
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    voice_id = 'voice_id_example' # str | 
-    favorite_voice_request = respeecher.FavoriteVoiceRequest() # FavoriteVoiceRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.FavoriteVoiceIdBody() # FavoriteVoiceIdBody | 
+voice_id = 'voice_id_example' # str | 
 
-    try:
-        # Mark a voice as a favorite
-        api_response = api_instance.favorite_voice(voice_id, favorite_voice_request)
-        print("The response of DefaultApi->favorite_voice:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->favorite_voice: %s\n" % e)
+try:
+    # Mark a voice as a favorite
+    api_response = api_instance.favorite_voice(body, voice_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->favorite_voice: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **body** | [**FavoriteVoiceIdBody**](FavoriteVoiceIdBody.md)|  | 
  **voice_id** | **str**|  | 
- **favorite_voice_request** | [**FavoriteVoiceRequest**](FavoriteVoiceRequest.md)|  | 
 
 ### Return type
 
@@ -1475,103 +959,69 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Voice updated successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **generate_api_key**
-> GenerateApiKey200Response generate_api_key(generate_api_key_request)
+> InlineResponse200 generate_api_key(body)
 
 Generate a new API key
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.generate_api_key200_response import GenerateApiKey200Response
-from respeecher.models.generate_api_key_request import GenerateApiKeyRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    generate_api_key_request = respeecher.GenerateApiKeyRequest() # GenerateApiKeyRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.ApiApikeyBody() # ApiApikeyBody | 
 
-    try:
-        # Generate a new API key
-        api_response = api_instance.generate_api_key(generate_api_key_request)
-        print("The response of DefaultApi->generate_api_key:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->generate_api_key: %s\n" % e)
+try:
+    # Generate a new API key
+    api_response = api_instance.generate_api_key(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->generate_api_key: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **generate_api_key_request** | [**GenerateApiKeyRequest**](GenerateApiKeyRequest.md)|  | 
+ **body** | [**ApiApikeyBody**](ApiApikeyBody.md)|  | 
 
 ### Return type
 
-[**GenerateApiKey200Response**](GenerateApiKey200Response.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | API key generated successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1581,58 +1031,37 @@ Name | Type | Description  | Notes
 Get samples available for an accent
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.accent_samples_response import AccentSamplesResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    accent_id = 'accent_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+accent_id = 'accent_id_example' # str | 
 
-    try:
-        # Get samples available for an accent
-        api_response = api_instance.get_accent_samples(accent_id)
-        print("The response of DefaultApi->get_accent_samples:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_accent_samples: %s\n" % e)
+try:
+    # Get samples available for an accent
+    api_response = api_instance.get_accent_samples(accent_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_accent_samples: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1644,18 +1073,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Accent samples |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1665,57 +1088,36 @@ Name | Type | Description  | Notes
 Get the statistics for your account
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.account_statistics import AccountStatistics
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Get the statistics for your account
-        api_response = api_instance.get_account_statistics()
-        print("The response of DefaultApi->get_account_statistics:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_account_statistics: %s\n" % e)
+try:
+    # Get the statistics for your account
+    api_response = api_instance.get_account_statistics()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_account_statistics: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -1724,18 +1126,12 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Account statistics |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1745,58 +1141,37 @@ This endpoint does not need any parameter.
 Get a calibration by its ID
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.calibration_response import CalibrationResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    calibration_id = 'calibration_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+calibration_id = 'calibration_id_example' # str | 
 
-    try:
-        # Get a calibration by its ID
-        api_response = api_instance.get_calibration(calibration_id)
-        print("The response of DefaultApi->get_calibration:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_calibration: %s\n" % e)
+try:
+    # Get a calibration by its ID
+    api_response = api_instance.get_calibration(calibration_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_calibration: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1808,98 +1183,65 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Calibration details |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_credits**
-> GetCredits200Response get_credits()
+> InlineResponse2003 get_credits()
 
 Get the credits available to your account
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.get_credits200_response import GetCredits200Response
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Get the credits available to your account
-        api_response = api_instance.get_credits()
-        print("The response of DefaultApi->get_credits:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_credits: %s\n" % e)
+try:
+    # Get the credits available to your account
+    api_response = api_instance.get_credits()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_credits: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**GetCredits200Response**](GetCredits200Response.md)
+[**InlineResponse2003**](InlineResponse2003.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Credits information retrieved successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1909,58 +1251,37 @@ This endpoint does not need any parameter.
 Get a folder by its ID
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.folder import Folder
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    folder_id = 'folder_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+folder_id = 'folder_id_example' # str | 
 
-    try:
-        # Get a folder by its ID
-        api_response = api_instance.get_folder_by_id(folder_id)
-        print("The response of DefaultApi->get_folder_by_id:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_folder_by_id: %s\n" % e)
+try:
+    # Get a folder by its ID
+    api_response = api_instance.get_folder_by_id(folder_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_folder_by_id: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1972,103 +1293,69 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folder retrieved successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_folders_statistics**
-> List[FolderStatistics] get_folders_statistics(folders_statistics_request)
+> FoldersStatisticsResponse get_folders_statistics(body)
 
 Get statistics for a list of folders
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.folder_statistics import FolderStatistics
-from respeecher.models.folders_statistics_request import FoldersStatisticsRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    folders_statistics_request = respeecher.FoldersStatisticsRequest() # FoldersStatisticsRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.FoldersStatisticsRequest() # FoldersStatisticsRequest | 
 
-    try:
-        # Get statistics for a list of folders
-        api_response = api_instance.get_folders_statistics(folders_statistics_request)
-        print("The response of DefaultApi->get_folders_statistics:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_folders_statistics: %s\n" % e)
+try:
+    # Get statistics for a list of folders
+    api_response = api_instance.get_folders_statistics(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_folders_statistics: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **folders_statistics_request** | [**FoldersStatisticsRequest**](FoldersStatisticsRequest.md)|  | 
+ **body** | [**FoldersStatisticsRequest**](FoldersStatisticsRequest.md)|  | 
 
 ### Return type
 
-[**List[FolderStatistics]**](FolderStatistics.md)
+[**FoldersStatisticsResponse**](FoldersStatisticsResponse.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folders statistics |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2078,58 +1365,37 @@ Name | Type | Description  | Notes
 Get a project by its URL
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.project_response import ProjectResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_url = 'project_url_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_url = 'project_url_example' # str | 
 
-    try:
-        # Get a project by its URL
-        api_response = api_instance.get_project_by_url(project_url)
-        print("The response of DefaultApi->get_project_by_url:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_project_by_url: %s\n" % e)
+try:
+    # Get a project by its URL
+    api_response = api_instance.get_project_by_url(project_url)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_project_by_url: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2141,79 +1407,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Project retrieved successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_projects_statistics**
-> List[List[ProjectStatistics]] get_projects_statistics(project_ids=project_ids)
+> list[ProjectsStatisticsResponse] get_projects_statistics(project_ids=project_ids)
 
 Get statistics for a list of projects
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.project_statistics import ProjectStatistics
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_ids = 'project_ids_example' # str | Comma-separated list of project IDs to fetch statistics for. (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_ids = 'project_ids_example' # str | Comma-separated list of project IDs to fetch statistics for. (optional)
 
-    try:
-        # Get statistics for a list of projects
-        api_response = api_instance.get_projects_statistics(project_ids=project_ids)
-        print("The response of DefaultApi->get_projects_statistics:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_projects_statistics: %s\n" % e)
+try:
+    # Get statistics for a list of projects
+    api_response = api_instance.get_projects_statistics(project_ids=project_ids)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_projects_statistics: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2221,22 +1460,16 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[List[ProjectStatistics]]**
+[**list[ProjectsStatisticsResponse]**](ProjectsStatisticsResponse.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Statistics for the specified projects |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2246,58 +1479,37 @@ Name | Type | Description  | Notes
 Get a recording by its ID
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording import Recording
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    recording_id = 'recording_id_example' # str | The ID of the recording to fetch
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+recording_id = 'recording_id_example' # str | The ID of the recording to fetch
 
-    try:
-        # Get a recording by its ID
-        api_response = api_instance.get_recording_by_id(recording_id)
-        print("The response of DefaultApi->get_recording_by_id:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_recording_by_id: %s\n" % e)
+try:
+    # Get a recording by its ID
+    api_response = api_instance.get_recording_by_id(recording_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->get_recording_by_id: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2309,166 +1521,112 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Recording fetched successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_calibrations**
-> List[CalibrationResponse] list_calibrations()
+> list[CalibrationResponse] list_calibrations()
 
 Get a list of calibrations associated with your account
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.calibration_response import CalibrationResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Get a list of calibrations associated with your account
-        api_response = api_instance.list_calibrations()
-        print("The response of DefaultApi->list_calibrations:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_calibrations: %s\n" % e)
+try:
+    # Get a list of calibrations associated with your account
+    api_response = api_instance.list_calibrations()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_calibrations: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[CalibrationResponse]**](CalibrationResponse.md)
+[**list[CalibrationResponse]**](CalibrationResponse.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A list of calibrations |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_conversions**
-> RecordingListResponse list_conversions(original_id=original_id, limit=limit, offset=offset, direction=direction)
+> RecordingListResponse list_conversions(original_id, limit=limit, offset=offset, direction=direction)
 
 Get a list of the conversions for an original recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording_list_response import RecordingListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    original_id = 'original_id_example' # str |  (optional)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    direction = 'direction_example' # str |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+original_id = 'original_id_example' # str | 
+limit = 56 # int |  (optional)
+offset = 56 # int |  (optional)
+direction = 'direction_example' # str |  (optional)
 
-    try:
-        # Get a list of the conversions for an original recording
-        api_response = api_instance.list_conversions(original_id=original_id, limit=limit, offset=offset, direction=direction)
-        print("The response of DefaultApi->list_conversions:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_conversions: %s\n" % e)
+try:
+    # Get a list of the conversions for an original recording
+    api_response = api_instance.list_conversions(original_id, limit=limit, offset=offset, direction=direction)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_conversions: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **original_id** | **str**|  | [optional] 
+ **original_id** | **str**|  | 
  **limit** | **int**|  | [optional] 
  **offset** | **int**|  | [optional] 
  **direction** | **str**|  | [optional] 
@@ -2479,18 +1637,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of recordings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2500,61 +1652,40 @@ Name | Type | Description  | Notes
 Get a list of the folders in a project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.folder_list_response import FolderListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_id = 'project_id_example' # str | 
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    direction = 'direction_example' # str |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_id = 'project_id_example' # str | 
+limit = 56 # int |  (optional)
+offset = 56 # int |  (optional)
+direction = 'direction_example' # str |  (optional)
 
-    try:
-        # Get a list of the folders in a project
-        api_response = api_instance.list_folders(project_id, limit=limit, offset=offset, direction=direction)
-        print("The response of DefaultApi->list_folders:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_folders: %s\n" % e)
+try:
+    # Get a list of the folders in a project
+    api_response = api_instance.list_folders(project_id, limit=limit, offset=offset, direction=direction)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_folders: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2569,18 +1700,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folders list retrieved successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2590,57 +1715,36 @@ Name | Type | Description  | Notes
 Get a list of the original recordings in a folder
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording_list_response import RecordingListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Get a list of the original recordings in a folder
-        api_response = api_instance.list_original_recordings()
-        print("The response of DefaultApi->list_original_recordings:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_original_recordings: %s\n" % e)
+try:
+    # Get a list of the original recordings in a folder
+    api_response = api_instance.list_original_recordings()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_original_recordings: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -2649,18 +1753,12 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of original recordings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2670,62 +1768,41 @@ This endpoint does not need any parameter.
 Get a list of your projects
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.project_list_response import ProjectListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    limit = 56 # int | The maximum number of projects to list. (optional)
-    offset = 56 # int | The number of projects to offset the list by. (optional)
-    sort = 'sort_example' # str | Sort by name, created_at or last_recording_at. (optional)
-    direction = 'direction_example' # str | Order projects by asc or desc. (optional)
-    owner = 'owner_example' # str | List projects for a specific owner ID. (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+limit = 56 # int | The maximum number of projects to list. (optional)
+offset = 56 # int | The number of projects to offset the list by. (optional)
+sort = 'sort_example' # str | Sort by name, created_at or last_recording_at. (optional)
+direction = 'direction_example' # str | Order projects by asc or desc. (optional)
+owner = 'owner_example' # str | List projects for a specific owner ID. (optional)
 
-    try:
-        # Get a list of your projects
-        api_response = api_instance.list_projects(limit=limit, offset=offset, sort=sort, direction=direction, owner=owner)
-        print("The response of DefaultApi->list_projects:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_projects: %s\n" % e)
+try:
+    # Get a list of your projects
+    api_response = api_instance.list_projects(limit=limit, offset=offset, sort=sort, direction=direction, owner=owner)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_projects: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2741,18 +1818,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Projects list retrieved successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2762,62 +1833,41 @@ Name | Type | Description  | Notes
 Get a list of recordings for a specified folder or project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording_list_response import RecordingListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_id = 'project_id_example' # str |  (optional)
-    folder_id = 'folder_id_example' # str |  (optional)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    direction = 'direction_example' # str |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+project_id = 'project_id_example' # str |  (optional)
+folder_id = 'folder_id_example' # str |  (optional)
+limit = 56 # int |  (optional)
+offset = 56 # int |  (optional)
+direction = 'direction_example' # str |  (optional)
 
-    try:
-        # Get a list of recordings for a specified folder or project
-        api_response = api_instance.list_recordings(project_id=project_id, folder_id=folder_id, limit=limit, offset=offset, direction=direction)
-        print("The response of DefaultApi->list_recordings:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_recordings: %s\n" % e)
+try:
+    # Get a list of recordings for a specified folder or project
+    api_response = api_instance.list_recordings(project_id=project_id, folder_id=folder_id, limit=limit, offset=offset, direction=direction)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_recordings: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2833,98 +1883,65 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of recordings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_tts_voices**
-> List[TTSVoice] list_tts_voices()
+> list[TTSVoice] list_tts_voices()
 
 Get a list of the available TTS voices
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.tts_voice import TTSVoice
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # Get a list of the available TTS voices
-        api_response = api_instance.list_tts_voices()
-        print("The response of DefaultApi->list_tts_voices:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_tts_voices: %s\n" % e)
+try:
+    # Get a list of the available TTS voices
+    api_response = api_instance.list_tts_voices()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_tts_voices: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[TTSVoice]**](TTSVoice.md)
+[**list[TTSVoice]**](TTSVoice.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of TTS voices retrieved successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2934,74 +1951,53 @@ This endpoint does not need any parameter.
 Get a list of the voices available
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.voices_list_response import VoicesListResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    limit = 25 # int | Limits the number of voices returned in the response. Defaults to 25. (optional) (default to 25)
-    offset = 0 # int | Offsets the list of voices to paginate through results. Defaults to 0. (optional) (default to 0)
-    sort = 'sort_example' # str | Sorts the voices by a specified attribute (e.g., name, pitch, rating, or created_at). (optional)
-    direction = 'direction_example' # str | Specifies the direction of sorting. Can be 'asc' for ascending or 'desc' for descending. (optional)
-    visibility = 'visibility_example' # str | Filters voices by their visibility status (e.g., public, paid, private, or kids). (optional)
-    species = 'species_example' # str | Filters voices by species category (e.g., human, animal, or other). (optional)
-    gender = 'gender_example' # str | Filters voices by gender (e.g., male or female). (optional)
-    age_group = 'age_group_example' # str | Filters voices by age group (e.g., child, young, adult, or senior). (optional)
-    pitch_group = 'pitch_group_example' # str | Filters voices by pitch group (e.g., low, mid, or high). (optional)
-    nationality = 'nationality_example' # str | Filters voices by nationality. (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+limit = 25 # int | Limits the number of voices returned in the response. Defaults to 25. (optional) (default to 25)
+offset = 0 # int | Offsets the list of voices to paginate through results. Defaults to 0. (optional) (default to 0)
+sort = 'sort_example' # str | Sorts the voices by a specified attribute (e.g., name, pitch, rating, or created_at). (optional)
+direction = 'direction_example' # str | Specifies the direction of sorting. Can be 'asc' for ascending or 'desc' for descending. (optional)
+visibility = 'visibility_example' # str | Filters voices by their visibility status (e.g., public, paid, private, or kids). (optional)
+species = 'species_example' # str | Filters voices by species category (e.g., human, animal, or other). (optional)
+gender = 'gender_example' # str | Filters voices by gender (e.g., male or female). (optional)
+age_group = 'age_group_example' # str | Filters voices by age group (e.g., child, young, adult, or senior). (optional)
+pitch_group = 'pitch_group_example' # str | Filters voices by pitch group (e.g., low, mid, or high). (optional)
+nationality = 'nationality_example' # str | Filters voices by nationality. (optional)
 
-    try:
-        # Get a list of the voices available
-        api_response = api_instance.list_voices(limit=limit, offset=offset, sort=sort, direction=direction, visibility=visibility, species=species, gender=gender, age_group=age_group, pitch_group=pitch_group, nationality=nationality)
-        print("The response of DefaultApi->list_voices:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->list_voices: %s\n" % e)
+try:
+    # Get a list of the voices available
+    api_response = api_instance.list_voices(limit=limit, offset=offset, sort=sort, direction=direction, visibility=visibility, species=species, gender=gender, age_group=age_group, pitch_group=pitch_group, nationality=nationality)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->list_voices: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**| Limits the number of voices returned in the response. Defaults to 25. | [optional] [default to 25]
  **offset** | **int**| Offsets the list of voices to paginate through results. Defaults to 0. | [optional] [default to 0]
  **sort** | **str**| Sorts the voices by a specified attribute (e.g., name, pitch, rating, or created_at). | [optional] 
- **direction** | **str**| Specifies the direction of sorting. Can be &#39;asc&#39; for ascending or &#39;desc&#39; for descending. | [optional] 
+ **direction** | **str**| Specifies the direction of sorting. Can be &#x27;asc&#x27; for ascending or &#x27;desc&#x27; for descending. | [optional] 
  **visibility** | **str**| Filters voices by their visibility status (e.g., public, paid, private, or kids). | [optional] 
  **species** | **str**| Filters voices by species category (e.g., human, animal, or other). | [optional] 
  **gender** | **str**| Filters voices by gender (e.g., male or female). | [optional] 
@@ -3015,251 +2011,168 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of available voices |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **login**
-> Login200Response login(login_request)
+> InlineResponse2001 login(body)
 
 Log in to an account and start a new session
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.login200_response import Login200Response
-from respeecher.models.login_request import LoginRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    login_request = respeecher.LoginRequest() # LoginRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.ApiLoginBody() # ApiLoginBody | 
 
-    try:
-        # Log in to an account and start a new session
-        api_response = api_instance.login(login_request)
-        print("The response of DefaultApi->login:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->login: %s\n" % e)
+try:
+    # Log in to an account and start a new session
+    api_response = api_instance.login(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->login: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **login_request** | [**LoginRequest**](LoginRequest.md)|  | 
+ **body** | [**ApiLoginBody**](ApiLoginBody.md)|  | 
 
 ### Return type
 
-[**Login200Response**](Login200Response.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Login successful |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **logout**
-> Logout200Response logout()
+> InlineResponse2002 logout()
 
 End your session
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.logout200_response import Logout200Response
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
 
-    try:
-        # End your session
-        api_response = api_instance.logout()
-        print("The response of DefaultApi->logout:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->logout: %s\n" % e)
+try:
+    # End your session
+    api_response = api_instance.logout()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->logout: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**Logout200Response**](Logout200Response.md)
+[**InlineResponse2002**](InlineResponse2002.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Logout successful |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **rename_folder**
-> Folder rename_folder(folder_id, update_project_request)
+> Folder rename_folder(body, folder_id)
 
 Rename a folder
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.folder import Folder
-from respeecher.models.update_project_request import UpdateProjectRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    folder_id = 'folder_id_example' # str | 
-    update_project_request = respeecher.UpdateProjectRequest() # UpdateProjectRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.FoldersFolderIdBody() # FoldersFolderIdBody | 
+folder_id = 'folder_id_example' # str | 
 
-    try:
-        # Rename a folder
-        api_response = api_instance.rename_folder(folder_id, update_project_request)
-        print("The response of DefaultApi->rename_folder:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->rename_folder: %s\n" % e)
+try:
+    # Rename a folder
+    api_response = api_instance.rename_folder(body, folder_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->rename_folder: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **body** | [**FoldersFolderIdBody**](FoldersFolderIdBody.md)|  | 
  **folder_id** | **str**|  | 
- **update_project_request** | [**UpdateProjectRequest**](UpdateProjectRequest.md)|  | 
 
 ### Return type
 
@@ -3267,18 +2180,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Folder renamed successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3288,55 +2195,36 @@ Name | Type | Description  | Notes
 Retry a conversion order for a specific original
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    recording_id = 'recording_id_example' # str | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+recording_id = 'recording_id_example' # str | 
 
-    try:
-        # Retry a conversion order for a specific original
-        api_instance.retry_order_v2(recording_id)
-    except Exception as e:
-        print("Exception when calling DefaultApi->retry_order_v2: %s\n" % e)
+try:
+    # Retry a conversion order for a specific original
+    api_instance.retry_order_v2(recording_id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->retry_order_v2: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -3348,80 +2236,53 @@ void (empty response body)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Order retried successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **search_voices**
-> List[Voice] search_voices(name, limit=limit)
+> list[Voice] search_voices(name, limit=limit)
 
 Search for a voice by its name
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.voice import Voice
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    name = 'name_example' # str | 
-    limit = 56 # int |  (optional)
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+name = 'name_example' # str | 
+limit = 56 # int |  (optional)
 
-    try:
-        # Search for a voice by its name
-        api_response = api_instance.search_voices(name, limit=limit)
-        print("The response of DefaultApi->search_voices:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->search_voices: %s\n" % e)
+try:
+    # Search for a voice by its name
+    api_response = api_instance.search_voices(name, limit=limit)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->search_voices: %s\n" % e)
 ```
 
-
-
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -3430,88 +2291,60 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[Voice]**](Voice.md)
+[**list[Voice]**](Voice.md)
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Search results |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_voice_settings**
-> Voice set_voice_settings(voice_settings_request)
+> Voice set_voice_settings(body)
 
 Set the settings for a voice
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.voice import Voice
-from respeecher.models.voice_settings_request import VoiceSettingsRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    voice_settings_request = respeecher.VoiceSettingsRequest() # VoiceSettingsRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.VoiceSettingsRequest() # VoiceSettingsRequest | 
 
-    try:
-        # Set the settings for a voice
-        api_response = api_instance.set_voice_settings(voice_settings_request)
-        print("The response of DefaultApi->set_voice_settings:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->set_voice_settings: %s\n" % e)
+try:
+    # Set the settings for a voice
+    api_response = api_instance.set_voice_settings(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->set_voice_settings: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **voice_settings_request** | [**VoiceSettingsRequest**](VoiceSettingsRequest.md)|  | 
+ **body** | [**VoiceSettingsRequest**](VoiceSettingsRequest.md)|  | 
 
 ### Return type
 
@@ -3519,84 +2352,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Voice settings updated successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_note**
-> NoteResponse update_note(note_request)
+> NoteResponse update_note(body)
 
 Update a note
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.note_request import NoteRequest
-from respeecher.models.note_response import NoteResponse
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    note_request = respeecher.NoteRequest() # NoteRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.NoteRequest() # NoteRequest | 
 
-    try:
-        # Update a note
-        api_response = api_instance.update_note(note_request)
-        print("The response of DefaultApi->update_note:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->update_note: %s\n" % e)
+try:
+    # Update a note
+    api_response = api_instance.update_note(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->update_note: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **note_request** | [**NoteRequest**](NoteRequest.md)|  | 
+ **body** | [**NoteRequest**](NoteRequest.md)|  | 
 
 ### Return type
 
@@ -3604,86 +2409,58 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Note updated successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_project**
-> ProjectResponse update_project(project_id, update_project_request)
+> ProjectResponse update_project(body, project_id)
 
 Change the name of a project
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.project_response import ProjectResponse
-from respeecher.models.update_project_request import UpdateProjectRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    project_id = 'project_id_example' # str | 
-    update_project_request = respeecher.UpdateProjectRequest() # UpdateProjectRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.ProjectsProjectIdBody() # ProjectsProjectIdBody | 
+project_id = 'project_id_example' # str | 
 
-    try:
-        # Change the name of a project
-        api_response = api_instance.update_project(project_id, update_project_request)
-        print("The response of DefaultApi->update_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->update_project: %s\n" % e)
+try:
+    # Change the name of a project
+    api_response = api_instance.update_project(body, project_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->update_project: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **body** | [**ProjectsProjectIdBody**](ProjectsProjectIdBody.md)|  | 
  **project_id** | **str**|  | 
- **update_project_request** | [**UpdateProjectRequest**](UpdateProjectRequest.md)|  | 
 
 ### Return type
 
@@ -3691,86 +2468,58 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Project updated successfully |  -  |
-
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_recording**
-> Recording update_recording(recording_id, update_recording_request)
+> Recording update_recording(body, recording_id)
 
 Update a recording
 
 ### Example
-
-* Api Key Authentication (CookieAuth):
-* Api Key Authentication (ApiKeyAuth):
-
 ```python
+from __future__ import print_function
+import time
 import respeecher
-from respeecher.models.recording import Recording
-from respeecher.models.update_recording_request import UpdateRecordingRequest
 from respeecher.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.respeecher.com
-# See configuration.py for a list of all supported configuration parameters.
-configuration = respeecher.Configuration(
-    host = "https://api.respeecher.com"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: CookieAuth
-configuration.api_key['CookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['CookieAuth'] = 'Bearer'
-
 # Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
+configuration = respeecher.Configuration()
+configuration.api_key['api-key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# configuration.api_key_prefix['api-key'] = 'Bearer'
+# Configure API key authorization: CookieAuth
+configuration = respeecher.Configuration()
+configuration.api_key['X-Csrf-Token'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-Csrf-Token'] = 'Bearer'
 
-# Enter a context with an instance of the API client
-with respeecher.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = respeecher.DefaultApi(api_client)
-    recording_id = 'recording_id_example' # str | The ID of the recording to update
-    update_recording_request = respeecher.UpdateRecordingRequest() # UpdateRecordingRequest | 
+# create an instance of the API class
+api_instance = respeecher.DefaultApi(respeecher.ApiClient(configuration))
+body = respeecher.RecordingsRecordingIdBody() # RecordingsRecordingIdBody | 
+recording_id = 'recording_id_example' # str | The ID of the recording to update
 
-    try:
-        # Update a recording
-        api_response = api_instance.update_recording(recording_id, update_recording_request)
-        print("The response of DefaultApi->update_recording:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->update_recording: %s\n" % e)
+try:
+    # Update a recording
+    api_response = api_instance.update_recording(body, recording_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->update_recording: %s\n" % e)
 ```
-
-
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **body** | [**RecordingsRecordingIdBody**](RecordingsRecordingIdBody.md)|  | 
  **recording_id** | **str**| The ID of the recording to update | 
- **update_recording_request** | [**UpdateRecordingRequest**](UpdateRecordingRequest.md)|  | 
 
 ### Return type
 
@@ -3778,18 +2527,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CookieAuth](../README.md#CookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth), [CookieAuth](../README.md#CookieAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Recording updated successfully |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

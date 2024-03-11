@@ -1,8 +1,6 @@
 # Recording
 
-
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Unique identifier for the recording. | [optional] 
@@ -35,7 +33,7 @@ Name | Type | Description | Notes
 **tts_voice** | **str** | The TTS voice used for the recording. | [optional] 
 **tts_voice_id** | **str** | The TTS voice identifier used for the recording. | [optional] 
 **text** | **str** | The text content of the TTS recording. | [optional] 
-**params** | **Dict[str, object]** | Additional parameters for the recording. | [optional] 
+**params** | **dict(str, object)** | Additional parameters for the recording. | [optional] 
 **error** | **str** | Any error message associated with the recording. | [optional] 
 **active** | **bool** | Indicates if the recording is active. | [optional] 
 **created_at** | **datetime** | The creation date and time of the recording. | [optional] 
@@ -46,23 +44,5 @@ Name | Type | Description | Notes
 **transaction_id** | **str** | The transaction identifier associated with the recording. | [optional] 
 **moderation** | [**RecordingModeration**](RecordingModeration.md) |  | [optional] 
 
-## Example
-
-```python
-from respeecher.models.recording import Recording
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Recording from a JSON string
-recording_instance = Recording.from_json(json)
-# print the JSON string representation of the object
-print(Recording.to_json())
-
-# convert the object into a dict
-recording_dict = recording_instance.to_dict()
-# create an instance of Recording from a dict
-recording_form_dict = recording.from_dict(recording_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 
